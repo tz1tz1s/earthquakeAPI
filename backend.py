@@ -39,8 +39,8 @@ def backend(a):
             for i in range(len(y["features"])):
                 headers1=headers
                 payload1=b_dict.get(i)
-                x = requests.request("POST", api_url, headers=headers1, data=payload1)
-            return ("DATA POSTED SUCCESSFULLY")
+                #x = requests.request("POST", api_url, headers=headers1, data=payload1)
+        return ("DATA POSTED SUCCESSFULLY")
     return render_template('backend_form.html')
 
 
