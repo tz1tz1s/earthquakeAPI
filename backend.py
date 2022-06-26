@@ -1,9 +1,9 @@
 from flask import Flask
-from flask import request, render_template, jsonify
+from flask import request, render_template
 import requests
 import json
 from datetime import datetime
-from flask import g, globals
+
 
 app = Flask(__name__)
 
@@ -28,15 +28,17 @@ def backend(a):
             time = str(datetime.fromtimestamp(timestamp).strftime('%d-%m-%y'))
             mag = y["features"][i]["properties"]["mag"]
             place = y["features"][i]["properties"]["place"]
+
         if a==2:
             payload1 = {}
             for i in range(len(y["features"])):
-                for variable in ["time", "mag", "place"]:
+                for variable in [time, mag, place]:
                     payload1[variable] = eval(variable)
-                    api_url = "https://127.0.0.1/5001/api/get/"
+                    api_url = "https://127.0.0.1/5001/api/get_data/"
                     headers1 = {}
-                    x = requests.request("POST",api_url, headers=headers1, data=payload1)
-            return ("DATA POSTED SUCCESSFULLY",payload1)
+                    print(payload1)
+                    #x = requests.request("POST",api_url, headers=headers1, data=json.dumps(payload1))
+            return ("DATA POSTED SUCCESSFULLY")
     return render_template('backend_form.html')
 
 if __name__ == '__main__':
