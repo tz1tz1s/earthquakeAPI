@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+ <title>
+  World's Most Resent Earthquakes
+ </title>
+ <style>
+table,th,td{
+ border: 1px solid black;
+}
+td{
+ background-color: #00ffdd;
+ float:center;
+}
+th{
+ background-color: #00dd00
+}
+.mg{
+ text-align:center;
+}
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  background-image: url('https://www.worldometers.info/world-map/world-map-pro.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+a{
+  color: #000000;
+}
+ </style>
+ <body>
+  <h1>Results:</h1>
+  <table>
+   <tr>
+    <th>#</th>
+    <th>Name</th>
+    <th>Magnitude</th>
+    <th>Date</th>
+   </tr>
+   {% for x in range (test) %}
+   <tr>
+      <td>{{x+1}}</td>
+      <td><a href="/3/{{x}}">{{Cities[x]}}</a></td>
+      <td class="mg">{{Mag[x]}}</td>
+      <td>{{Date[x]}}</td>
+   <tr/>
+   {% endfor %}
+  </table>
+  <form action="/">
+   <input type="submit" value="Back"/>
+  </form>
+ </body>
+</html>
