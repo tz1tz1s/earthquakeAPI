@@ -35,7 +35,7 @@ def backend(a):
                 a_dict[variable]=eval(variable)
                 b_dict[i]=a_dict
         if a == 2:
-            api_url = "https://127.0.0.1/5001/api/get/"
+            api_url = "http://127.0.0.1:5002/api/get/"
             for i in range(len(y["features"])):
                 headers1=headers
                 payload1=b_dict.get(i)
