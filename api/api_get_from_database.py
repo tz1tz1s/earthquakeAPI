@@ -29,8 +29,14 @@ def get_data_from_database():
     """
     mycursor.execute(get_data_sql)
     data = mycursor.fetchall()
-    print(data[1][0])
-    return str(data[1][0])
+    length = len(data)
+    print(length)
+    final_json_object = {}
+    for i in range(length):
+        print(data[i][0])
+        final_json_object[i] = data[i][0]
+
+    return str(final_json_object)
 
 
 
