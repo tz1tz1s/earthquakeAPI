@@ -54,7 +54,6 @@ def details(x, y):
         City.append(data[3])
         Mag.append(data[2])
         time.append(data[1])
-    responce = json.loads(requests.get('https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/significant_month.geojson').text)
     if x==1:
         mag = request.args.get("Magnitude")
         url2= "http://127.0.0.1:5006/get_data_mag/"+str(mag)
