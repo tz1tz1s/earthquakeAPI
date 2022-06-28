@@ -1,47 +1,56 @@
-from flask import Flask,redirect,request
+import json
+
+from flask import Flask, redirect, request, jsonify
+
 import mysql.connector
 
-app =  Flask(__name__)
+app = Flask(__name__)
 
 mydb = mysql.connector.connect(
-  host="127.0.0.1",
-  user="root",
-  password="",
-  database="final_db"
+    host="127.0.0.1",
+    user="root",
+    password="",
+    database="final_db"
 )
+mycursor = mydb.cursor()
 
 
 @app.route('/')
-
-def hello_world():
+def hello():
+    print("Hello World")
     return "hello world"
 
 
-@app.route('/api/get/', methods=['GET','POST'])
-
-def get_data_from_backend():
-    if request.method == 'POST':
-        time_p = request.form["time"]
-        magnitude_p = request.form["mag"]
-        place_p = request.form["place"]
-
-
-
-    time_post = time_p
-    magnitude_post = magnitude_p
-    place_post =  place_p
+@app.route("/get_data_length", methods=['GET', 'POST'])
+def get_data_from_database():
     mycursor = mydb.cursor()
-    final_sql_statement2 = """ INSERT INTO all_in_one (time_stamp,magnitude,City) VALUES (%s,%s,%s)"""
-    entry_tuple = (time_post, magnitude_post, place_post)
+
+    mycursor.execute("SELECT id FROM all_in_one" )
+    myresult = mycursor.fetchall()
+    print(jsonify(myresult))
+    num_of_id = len(myresult)
+    return str(num_of_id)
 
 
-    mycursor.execute(final_sql_statement2, entry_tuple)
-    mydb.commit()
+@app.route("/get_data_by_id/<int:ID>", methods=['GET'])
 
-    print("hello_world")
-    return "hello world"
+def return_data_by_id(ID):
+    mycursor = mydb.cursor()
+    #mycursor.execute("SELECT * FROM all_in_one WHERE ID=" + str(ID))
+    mycursor.execute("SELECT * FROM all_in_one ")
+    myresult = mycursor.fetchall()
+    return jsonify(myresult)
+
+
+@app.route("/get_data_mag/<int:magn>", methods=['GET'])
+
+def return_data_by_magnitude(magn):
+    mycursor = mydb.cursor()
+    mycursor.execute("SELECT * FROM all_in_one WHERE magnitude >" + str(magn))
+    myresult = mycursor.fetchall()
+    return jsonify(myresult)
 
 
 
 if __name__ == '__main__':
-    app.run(port = 5002)
+    app.run(port="5006")
