@@ -53,4 +53,4 @@ def return_data_by_magnitude(magn):
 
 
 if __name__ == '__main__':
-    app.run(port="5006")
+    app.run(port=5006)
