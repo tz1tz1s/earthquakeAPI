@@ -7,10 +7,10 @@ import mysql.connector
 app = Flask(__name__)
 
 mydb = mysql.connector.connect(
-    host="127.0.0.1",
-    user="root",
-    password="",
-    database="final_db"
+    host="dalab.ee.duth.gr",
+    user='s58198',
+    password="116396",
+    database='s58198'
 )
 mycursor = mydb.cursor()
 
@@ -25,7 +25,7 @@ def hello():
 def get_data_from_database():
     mycursor = mydb.cursor()
 
-    mycursor.execute("SELECT * FROM all_in_one")
+    mycursor.execute("SELECT id FROM all_in_one" )
     myresult = mycursor.fetchall()
     print(jsonify(myresult))
     num_of_id = len(myresult)
@@ -36,9 +36,8 @@ def get_data_from_database():
 
 def return_data_by_id(ID):
     mycursor = mydb.cursor()
-    #mycursor.execute("SELECT * FROM all_in_one WHERE ID=" + str(ID))
-    mycursor.execute("SELECT * FROM all_in_one ")
-    myresult = mycursor.fetchall()
+    mycursor.execute("SELECT * FROM all_in_one WHERE ID=" + str(ID))
+    myresult = mycursor.fetchone()
     return jsonify(myresult)
 
 
@@ -53,4 +52,4 @@ def return_data_by_magnitude(magn):
 
 
 if __name__ == '__main__':
-    app.run(port=5006)
+    app.run(port="5006")
