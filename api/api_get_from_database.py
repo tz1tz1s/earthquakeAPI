@@ -21,26 +21,36 @@ def hello():
     return "hello world"
 
 
-@app.route("/get_data", methods=['GET', 'POST'])
+@app.route("/get_data_length", methods=['GET', 'POST'])
 def get_data_from_database():
-    get_data_sql = """
-     SELECT JSON_OBJECT ('id', ID,'magnitude', magnitude,'timestamp', time_stamp,'Place',City) FROM all_in_one;
-     """
-    mycursor.execute(get_data_sql)
-    data = mycursor.fetchall()
-    length = len(data)
-    print(length)
-    final_json_object = ""
-    for i in range(length):
-        print(data[i][0])
-        final_json_object += data[i][0]
+    mycursor = mydb.cursor()
+
+    mycursor.execute("SELECT * FROM all_in_one")
+    myresult = mycursor.fetchall()
+    print(jsonify(myresult))
+    num_of_id = len(myresult)
+    return str(num_of_id)
 
 
+@app.route("/get_data_by_id/<int:ID>", methods=['GET'])
 
-    return str(final_json_object)
+def return_data_by_id(ID):
+    mycursor = mydb.cursor()
+    #mycursor.execute("SELECT * FROM all_in_one WHERE ID=" + str(ID))
+    mycursor.execute("SELECT * FROM all_in_one ")
+    myresult = mycursor.fetchall()
+    return jsonify(myresult)
 
+
+@app.route("/get_data_mag/<int:magn>", methods=['GET'])
+
+def return_data_by_magnitude(magn):
+    mycursor = mydb.cursor()
+    mycursor.execute("SELECT * FROM all_in_one WHERE magnitude >" + str(magn))
+    myresult = mycursor.fetchall()
+    return jsonify(myresult)
 
 
 
 if __name__ == '__main__':
-    app.run(port="5003")
+    app.run(port="5006")
